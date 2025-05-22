@@ -11,6 +11,15 @@
     />
   </head>
   <body>
+
+    <nav class="navbar navbar-expand-sm bg-dark">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link btn btn-secondary" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </nav>
+
     <!-- Page Header -->
     <div class="container-fluid">
       <div class="jumbotron mt-5">

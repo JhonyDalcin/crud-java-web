@@ -1,4 +1,4 @@
-package io.github.crud_java_web.Cidade;
+package io.github.crud_java_web.cidade;
 
 import java.util.Optional;
 

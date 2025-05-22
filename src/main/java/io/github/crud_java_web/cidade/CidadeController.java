@@ -1,7 +1,6 @@
-package io.github.crud_java_web.Cidade;
+package io.github.crud_java_web.cidade;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,15 +22,19 @@ public class CidadeController {
 
     @GetMapping("/")
     public String listar(Model model) {
-        model.addAttribute("listaCidades", repository.findAll()
-                                                        .stream()
-                                                        .map(cidade ->
-                                                                    new Cidade(
-                                                                        cidade.getNome(),
-                                                                        cidade.getEstado()))
-                                                        .toList());
+        model.addAttribute("listaCidades",converterCidade(repository.findAll()));
         return "crud";
     }
+
+    public List<Cidade> converterCidade (List<CidadeEntidade> cidadesList){
+        return cidadesList.stream()
+                .map(cidade ->
+                        new Cidade(
+                                cidade.getNome(),
+                                cidade.getEstado()))
+                .toList();
+    }
+
 
     @PostMapping("/criar")
     public String criar(@Valid Cidade cidade, BindingResult validation, Model model) {
@@ -44,13 +47,7 @@ public class CidadeController {
             });
             model.addAttribute("nomeInformado", cidade.getNome());
             model.addAttribute("estadoInformado", cidade.getEstado());
-            model.addAttribute("listaCidades", repository.findAll()
-                                                        .stream()
-                                                        .map(cidadeEntidade ->
-                                                                    new Cidade(
-                                                                        cidadeEntidade.getNome(),
-                                                                        cidadeEntidade.getEstado()))
-                                                        .toList());
+            model.addAttribute("listaCidades", converterCidade(repository.findAll()));
             return "crud";
         }
         else{
@@ -79,13 +76,7 @@ public class CidadeController {
         
         receivedCity.ifPresent(cidade -> {
             model.addAttribute("cityToUpdate", cidade);
-            model.addAttribute("listaCidades", repository.findAll()
-                                                        .stream()
-                                                        .map(cidadeEntidade ->
-                                                                    new Cidade(
-                                                                        cidadeEntidade.getNome(),
-                                                                        cidadeEntidade.getEstado()))
-                                                        .toList());
+            model.addAttribute("listaCidades", converterCidade(repository.findAll()));
         });
 
         return "crud";
